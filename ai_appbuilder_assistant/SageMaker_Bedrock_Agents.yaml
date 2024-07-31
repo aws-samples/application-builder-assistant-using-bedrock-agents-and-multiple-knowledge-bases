@@ -1,0 +1,145 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation template to create SageMaker notebook with IAM policy and lifecycle configuration
+
+Parameters:
+  InstanceType:
+    Type: String
+    AllowedValues:
+      - ml.t3.medium
+    Description: 'The instance type used for the SageMaker Notebook'
+    Default: ml.t3.medium
+  AmazonBedrockFullAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/AmazonBedrockFullAccess'
+    AllowedValues:
+      - arn:aws:iam::aws:policy/AmazonBedrockFullAccess
+    Default: arn:aws:iam::aws:policy/AmazonBedrockFullAccess
+  AmazonOpenSearchServiceFullAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess'
+    AllowedValues:
+      - arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess
+    Default: arn:aws:iam::aws:policy/AmazonOpenSearchServiceFullAccess
+  AmazonSageMakerFullAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/AmazonSageMakerFullAccess'
+    AllowedValues:
+      - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+    Default: arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+  IAMFullAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/IAMFullAccess'
+    AllowedValues:
+      - arn:aws:iam::aws:policy/IAMFullAccess
+    Default: arn:aws:iam::aws:policy/IAMFullAccess
+  AWSLambdaFullAccess:
+    Type: String
+    Description: 'arn:aws:iam::aws:policy/AWSLambda_FullAccess'
+    AllowedValues:
+      - arn:aws:iam::aws:policy/AWSLambda_FullAccess
+    Default: arn:aws:iam::aws:policy/AWSLambda_FullAccess
+
+Resources:
+  # This policy does not follow principle of least privileges and should NEVER be used in production
+  SageMakerNotebookPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - bedrock:*
+              - iam:Get*
+              - iam:List*
+              - sagemaker:*
+              - s3:*
+              - aoss:*
+            Resource: "*"
+
+  SageMakerNotebookRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: sagemaker.amazonaws.com
+            Action: sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service: bedrock.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Ref SageMakerNotebookPolicy
+        - !Ref AmazonBedrockFullAccess
+        - !Ref AmazonOpenSearchServiceFullAccess
+        - !Ref AmazonSageMakerFullAccess
+        - !Ref IAMFullAccess
+        - !Ref AWSLambdaFullAccess
+
+  SageMakerNotebookInstance:
+    Type: AWS::SageMaker::NotebookInstance
+    Properties:
+      InstanceType: !Ref InstanceType
+      RoleArn: !GetAtt SageMakerNotebookRole.Arn
+      LifecycleConfigName: !GetAtt SageMakerNotebookLifecycleConfig.NotebookInstanceLifecycleConfigName
+      VolumeSizeInGB: 20
+  
+  SageMakerNotebookLifecycleConfig:
+    Type: AWS::SageMaker::NotebookInstanceLifecycleConfig
+    Properties: 
+      NotebookInstanceLifecycleConfigName: !Join ['-', ['LifeCycleConfig', !Select [4, !Split ['-', !Select [2, !Split ['/', !Ref AWS::StackId]]]]]]
+      OnStart:
+        - Content:
+            Fn::Base64:
+              !Sub |
+              #!/bin/bash
+
+              set -ex
+
+              # OVERVIEW
+              # This script stops a SageMaker notebook once it's idle for more than 1 hour (default time)
+              # You can change the idle time for stop using the environment variable below.
+              # If you want the notebook the stop only if no browsers are open, remove the --ignore-connections flag
+              #
+              # Note that this script will fail if either condition is not met
+              #   1. Ensure the Notebook Instance has internet connectivity to fetch the example config
+              #   2. Ensure the Notebook Instance execution role permissions to SageMaker:StopNotebookInstance to stop the notebook 
+              #       and SageMaker:DescribeNotebookInstance to describe the notebook.
+              #
+
+              # PARAMETERS
+              IDLE_TIME=43200
+
+              echo "Fetching the autostop script"  >> log.txt
+              wget https://raw.githubusercontent.com/aws-samples/amazon-sagemaker-notebook-instance-lifecycle-config-samples/master/scripts/auto-stop-idle/autostop.py
+
+              echo "Detecting Python install with boto3 install"  >> log.txt
+
+              # Find which install has boto3 and use that to run the cron command. So will use default when available
+              # Redirect stderr as it is unneeded
+              CONDA_PYTHON_DIR=$(source /home/ec2-user/anaconda3/bin/activate /home/ec2-user/anaconda3/envs/JupyterSystemEnv && which python)
+              if $CONDA_PYTHON_DIR -c "import boto3" 2>/dev/null; then
+                  PYTHON_DIR=$CONDA_PYTHON_DIR
+              elif /usr/bin/python -c "import boto3" 2>/dev/null; then
+                  PYTHON_DIR='/usr/bin/python' 
+              else
+                  # If no boto3 just quit because the script won't work
+                  echo "No boto3 found in Python or Python3. Exiting..."  >> log.txt
+                  exit 1
+              fi
+
+              echo "Found boto3 at $PYTHON_DIR" >> log.txt
+
+              echo "Starting the SageMaker autostop script in cron"  >> log.txt
+
+              (crontab -l 2>/dev/null; echo "*/5 * * * * $PYTHON_DIR $PWD/autostop.py --time $IDLE_TIME --ignore-connections") | crontab - 
+              echo "Crontab created!" >> log.txt
+
+Outputs:
+  SageMakerNotebook:
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/sagemaker/home?region=${AWS::Region}#/notebook-instances/openNotebook/${SageMakerNotebookInstance.NotebookInstanceName}?view=lab
+  BedrockModelAccess:
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/bedrock/home?region=${AWS::Region}#/modelaccess

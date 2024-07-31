@@ -1,0 +1,10 @@
+awscli==1.32.82
+boto3==1.34.82
+botocore==1.34.82
+ipywidgets==8.1.2
+langchain==0.1.15
+langchain-community==0.0.32
+langchain-core==0.1.41
+langchain-text-splitters==0.0.1
+opensearch-py==2.5.0
+requests-aws4auth==1.2.3

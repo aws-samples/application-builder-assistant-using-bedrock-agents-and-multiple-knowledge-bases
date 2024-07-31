@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SQL agents API",
+    "version": "1.0.0",
+    "description": "APIs to execute valid SQLite query that answers the question based on the [Northwind](https://docs.yugabyte.com/preview/sample-data/northwind/) database and dataset . APIs to help customers with knowledge of AWS by querying the aws best practices knowledge base for AWS Well-Architected Framework, writing code, and creating diagrams."
+  },
+  "paths": {
+    "/run-query": {
+      "post": {
+        "summary": "execute the sql queries",
+        "description": "this API can only execute queries against Northwind database",
+        "operationId": "executeSQLQuery",
+        "requestBody": {
+          "description": "SQLite query details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Query": {
+                    "type": "string",
+                    "description": "SQL Query"
+                  }
+                },
+                  "required": ["Query"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "execute the sql queries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      
+                      "generatedSQL": {
+                        "type": "string",
+                        "description": "generated SQL from user text"
+                      },
+                     "query_result": {
+                        "type": "string",
+                        "description": "final query result"
+                      }
+                    
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+      "/query_well_arch_framework": {
+            "post": {
+                "summary": "this API is just a LLM response response decorator ",
+                "description": "this API is just a LLM response decorator.",
+                "operationId": "queryWellArch",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "Customer query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],                
+                "responses": {
+                    "200": {
+                        "description": "Response sent back to Customer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "answer": {
+                                            "type": "string",
+                                            "description": "The response to customer query and list of documents cited."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gen_code": {
+            "post": {
+                "summary": "Generate code for the customer",
+                "description": "Write code for the customer. The API takes in the customer query and returns the code for the customer.",
+                "operationId": "genCode",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "Customer query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Code customer requested",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "string",
+                                            "description": "The code customer requested"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+}
+}
