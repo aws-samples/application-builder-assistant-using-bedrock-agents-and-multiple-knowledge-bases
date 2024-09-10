@@ -1,0 +1,6 @@
+{
+  "rationale": {
+    "text": "The search results provide the relevant tables and columns needed to query sales amounts and dates. The Orders table contains the order_date column, and the Order Details table contains the unit_price, quantity, and discount columns needed to calculate sales amounts. To get total sales by year, I will need to join these tables and group by the year extracted from the order_date column.",
+    "traceId": "a30ea494-6e6a-497f-bee5-b4d50dc3f300-1"
+  }
+}

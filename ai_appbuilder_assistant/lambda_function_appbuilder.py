@@ -9,18 +9,20 @@ import boto3
 import os
 
 credentials_profile_name = "default"
-region_name = "us-east-1"
+session = boto3.session.Session()
+region_name = session.region_name
 
 # setting logger
 logging.basicConfig(format='[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-s3 = boto3.client('s3')
+s3 = boto3.client('s3', region_name = region_name)
+
 bucket = os.environ.get('BUCKET_NAME')  #Name of bucket with data file and OpenAPI file
 kb_prefix = os.environ.get('KB_PREFIX')
 
-print(f'bucket :::: {bucket} and kb_prefix :::: {kb_prefix}')
+print(f'bucket :::: {bucket} and kb_prefix :::: {kb_prefix} and region_name ::: {region_name}')
 # kb_prefix+'/'+
 db_name = 'northwind.db' #Location of data file in S3
 local_db = '/tmp/northwind.db' #Location in Lambda /tmp folder where data file will be copied

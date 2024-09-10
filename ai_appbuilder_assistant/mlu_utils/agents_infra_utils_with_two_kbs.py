@@ -69,13 +69,13 @@ def setup_agent_infrastructure():
     schema_key = f'{agent_name}-schema.json' # file in repo
     schema_name = 'appbuilder_agent_openapi_schema_with_kb.json'
     schema_arn = f'arn:aws:s3:::{bucket_name}/{schema_key}'
-    bedrock_agent_bedrock_allow_policy_name = f"{prefix_iam}-bedrock-allow-{suffix}"
-    bedrock_agent_s3_allow_policy_name = f"{prefix_iam}-s3-allow-{suffix}"
+    bedrock_agent_bedrock_allow_policy_name = 'SageMakerNotebookPolicy'  #f"{prefix_iam}-bedrock-allow-{suffix}"
+    bedrock_agent_s3_allow_policy_name = 'AIAssistantAgentRoleDefaultPolicy' #f"{prefix_iam}-s3-allow-{suffix}"
     bedrock_agent_kb_allow_policy_name = f"{prefix_iam}-kb-allow-{suffix}"
-    lambda_role_name = f'{agent_name}-lambda-role-{suffix}'
-    agent_role_name = f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
+    lambda_role_name = 'AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant01' #f'{agent_name}-lambda-role-{suffix}'
+    agent_role_name = 'AmazonBedrockExecutionRoleForAgentsAIAssistant01'       #'f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
     lambda_code_path = f"lambda_function_appbuilder.py" # file in repo
-    lambda_name = f'{agent_name}-{suffix}'
+    lambda_name = 'LambdaAgentsAIAssistant' #f'{agent_name}-{suffix}'
 
     ## KB with DB
     kb_db_tag = 'kbdb'
@@ -84,14 +84,15 @@ def setup_agent_infrastructure():
     kb_db_data_source_name = f'{prefix_infra}-{kb_db_tag}-docs-{suffix}'
     kb_db_files_path = f'kb_appbuilder/northwind_db' # file path keep as-is
     kb_db_key = f'{kb_db_tag}_{prefix_infra}'
-    kb_db_role_name = f'AmazonBedrockExecutionRoleForKnowledgeBase_{prefix_infra}_{kb_db_tag}_icakb'
-    kb_db_bedrock_allow_policy_name = f"ica-{kb_db_tag}-{prefix_infra}-bedrock-allow-{suffix}"
-    kb_db_aoss_allow_policy_name = f"ica-{kb_db_tag}-{prefix_infra}-aoss-allow-{suffix}"
-    kb_db_s3_allow_policy_name = f"ica-{kb_db_tag}-{prefix_infra}-s3-allow-{suffix}"
-    kb_db_collection_name = f'{prefix_iam}-{kb_db_tag}-{suffix}' 
-    # Select Amazon titan as the embedding model
-    kb_db_embedding_model_arn = f'arn:aws:bedrock:{region}::foundation-model/amazon.titan-embed-text-v1'
-    kb_db_vector_index_name = f"bedrock-knowledge-base-{prefix_infra}-{kb_db_tag}-index"
+    kb_db_role_name = agent_role_name #'AmazonBedrockExecutionRoleForKnowledgeBase01'
+    #f'AmazonBedrockExecutionRoleForKnowledgeBase_{prefix_infra}_{kb_db_tag}_icakb'
+    kb_db_bedrock_allow_policy_name = "icaKbdbAgentsBedrockAllow01" # f"ica-{kb_db_tag}-{prefix_infra}-bedrock-allow-{suffix}"
+    kb_db_aoss_allow_policy_name = "icaKbdbAgentsBedrockAossAllow01" #f"ica-{kb_db_tag}-{prefix_infra}-aoss-allow-{suffix}"
+    kb_db_s3_allow_policy_name = "icaKbdbAgentsBedrocks3Allow01" #f"ica-{kb_db_tag}-{prefix_infra}-s3-allow-{suffix}"
+    kb_db_collection_name = 'kbdb-collection-agents' #f'{prefix_iam}-{kb_db_tag}-{suffix}' 
+    # Select Amazon titan as the embedding model amazon.titan-embed-text-v1, amazon.titan-embed-text-v2:0
+    kb_db_embedding_model_arn = f'arn:aws:bedrock:{region}::foundation-model/amazon.titan-embed-text-v2:0'
+    kb_db_vector_index_name = 'kbdb-index-agents' #f"bedrock-knowledge-base-{prefix_infra}-{kb_db_tag}-index"
     kb_db_metadataField = f'bedrock-knowledge-base-{prefix_infra}-{kb_db_tag}-metadata'
     kb_db_textField = f'bedrock-knowledge-base-{prefix_infra}-{kb_db_tag}-text'
     kb_db_vectorField = f'bedrock-knowledge-base-{prefix_infra}-{kb_db_tag}-vector'
@@ -103,14 +104,17 @@ def setup_agent_infrastructure():
     kb_aws_data_source_name = f'{prefix_infra}-{kb_aws_tag}-docs-{suffix}'
     kb_aws_files_path = f'kb_appbuilder/aws_best_practices_2' # file path keep as-is
     kb_aws_key = f'{kb_aws_tag}_{prefix_infra}'
-    kb_aws_role_name = f'AmazonBedrockExecutionRoleForKnowledgeBase_{prefix_infra}_{kb_aws_tag}_icakb'
-    kb_aws_bedrock_allow_policy_name = f"ica-{kb_aws_tag}-{prefix_infra}-bedrock-allow-{suffix}"
-    kb_aws_aoss_allow_policy_name = f"ica-{kb_aws_tag}-{prefix_infra}-aoss-allow-{suffix}"
-    kb_aws_s3_allow_policy_name = f"ica-{kb_aws_tag}-{prefix_infra}-s3-allow-{suffix}"
-    kb_aws_collection_name = f'{prefix_iam}-{kb_aws_tag}-{suffix}' 
+    kb_aws_role_name = agent_role_name #'AmazonBedrockExecutionRoleForKnowledgeBase02'
+    #f'AmazonBedrockExecutionRoleForKnowledgeBase_{prefix_infra}_{kb_aws_tag}_icakb'
+    kb_aws_bedrock_allow_policy_name = "icaKbdbAgentsBedrockAllow02" #f"ica-{kb_aws_tag}-{prefix_infra}-bedrock-allow-{suffix}"
+    kb_aws_aoss_allow_policy_name = "icaKbdbAgentsBedrockAossAllow02" #f"ica-{kb_aws_tag}-{prefix_infra}-aoss-allow-{suffix}"
+    kb_aws_s3_allow_policy_name = "icaKbdbAgentsBedrocks3Allow02" #f"ica-{kb_aws_tag}-{prefix_infra}-s3-allow-{suffix}"
+    
+    
+    kb_aws_collection_name = 'kbaws-collection-agents' #f'{prefix_iam}-{kb_aws_tag}-{suffix}' 
     # Select Amazon titan as the embedding model
-    kb_aws_embedding_model_arn = f'arn:aws:bedrock:{region}::foundation-model/amazon.titan-embed-text-v1'
-    kb_aws_vector_index_name = f"bedrock-knowledge-base-{prefix_infra}-{kb_aws_tag}-index"
+    kb_aws_embedding_model_arn = f'arn:aws:bedrock:{region}::foundation-model/amazon.titan-embed-text-v2:0'
+    kb_aws_vector_index_name = 'kbaws-index-agents' #f"bedrock-knowledge-base-{prefix_infra}-{kb_aws_tag}-index"
     kb_aws_metadataField = f'bedrock-knowledge-base-{prefix_infra}-{kb_aws_tag}-metadata'
     kb_aws_textField = f'bedrock-knowledge-base-{prefix_infra}-{kb_aws_tag}-text'
     kb_aws_vectorField = f'bedrock-knowledge-base-{prefix_infra}-{kb_aws_tag}-vector'
@@ -122,14 +126,15 @@ def setup_agent_infrastructure():
     schema_key = f'{agent_name}-schema.json' # file in repo
     schema_name = 'appbuilder_agent_openapi_schema_with_kb.json'
     schema_arn = f'arn:aws:s3:::{bucket_name}/{schema_key}'
-    bedrock_agent_bedrock_allow_policy_name = f"{prefix_iam}-bedrock-allow-{suffix}"
-    bedrock_agent_s3_allow_policy_name = f"{prefix_iam}-s3-allow-{suffix}"
+    '''
+    bedrock_agent_bedrock_allow_policy_name = 'SageMakerNotebookPolicy'  #f"{prefix_iam}-bedrock-allow-{suffix}"
+    bedrock_agent_s3_allow_policy_name = 'AIAssistantAgentRoleDefaultPolicy' #f"{prefix_iam}-s3-allow-{suffix}"
     bedrock_agent_kb_allow_policy_name = f"{prefix_iam}-kb-allow-{suffix}"
     lambda_role_name = f'{agent_name}-lambda-role-{suffix}'
     agent_role_name = f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
     lambda_code_path = f"lambda_function_appbuilder.py" # file in repo
     lambda_name = f'{agent_name}-{suffix}'
-
+    '''
 
     # ## Knowledge Base 1 : DB
 
@@ -140,7 +145,8 @@ def setup_agent_infrastructure():
 
     # Create S3 bucket for Open API schema
     s3bucket = s3_client.create_bucket(
-        Bucket=bucket_name
+        Bucket=bucket_name,
+        CreateBucketConfiguration={'LocationConstraint': region}
     )
 
 
@@ -176,7 +182,7 @@ def setup_agent_infrastructure():
     # 
     # Let's now create the lambda function required by the agent action group. We first need to create the lambda IAM role and it's policy. After that, we package the lambda function into a ZIP format to create the function
 
-
+    '''
     # Create IAM Role for the Lambda function
     try:
         assume_role_policy_document = {
@@ -195,9 +201,8 @@ def setup_agent_infrastructure():
 
         assume_role_policy_document_json = json.dumps(assume_role_policy_document)
 
-        lambda_iam_role = iam_client.create_role(
-            RoleName=lambda_role_name,
-            AssumeRolePolicyDocument=assume_role_policy_document_json
+        lambda_iam_role = iam_client.get_role(
+            RoleName=lambda_role_name
         )
 
         # Pause to make sure role is created
@@ -213,8 +218,78 @@ def setup_agent_infrastructure():
         RoleName=lambda_role_name,
         PolicyArn='arn:aws:iam::aws:policy/AmazonS3FullAccess'
     )
+    '''
+    lambda_iam_role = iam_client.get_role(
+            RoleName=lambda_role_name
+    )
+    agent_role = iam_client.get_role(
+        RoleName=agent_role_name
+    )
+    
+    kb_db_role = iam_client.get_role(
+        RoleName=kb_db_role_name
+    )
+    kb_aws_role = iam_client.get_role(
+        RoleName=kb_aws_role_name
+    )
 
+    agent_bedrock_policy = None
+    agent_s3_schema_policy = None
+    kb_db_bedrock_policy = None
+    kb_aws_bedrock_policy = None
+    kb_db_aoss_policy = None
+    kb_aws_aoss_policy = None
+    kb_db_s3_policy = None
+    kb_aws_s3_policy = None
+    agent_kb_schema_policy = None
+        
+    for policy in iam_client.list_policies()['Policies']:
+        #print(policy)
+        if bedrock_agent_bedrock_allow_policy_name in policy['PolicyName']:
+            agent_bedrock_policy = policy['Arn']
+        
+        if bedrock_agent_s3_allow_policy_name in policy['PolicyName']:
+            agent_s3_schema_policy = policy['Arn']
+        
+        # ---
+        if bedrock_agent_bedrock_allow_policy_name in policy['PolicyName']:
+            kb_db_bedrock_policy = policy['Arn']
+            
+        if bedrock_agent_bedrock_allow_policy_name in policy['PolicyName']:
+            kb_aws_bedrock_policy = policy['Arn']
+            
+        # --- 
+            
+        if kb_db_s3_allow_policy_name in policy['PolicyName']:
+            kb_db_s3_policy = policy['Arn']
+            
+        if kb_db_aoss_allow_policy_name in policy['PolicyName']:
+            kb_db_aoss_policy = policy['Arn']
+            
+        # ---
+        if kb_aws_s3_allow_policy_name in policy['PolicyName']:
+            kb_aws_s3_policy = policy['Arn']
 
+        if kb_aws_aoss_allow_policy_name in policy['PolicyName']:
+            kb_aws_aoss_policy = policy['Arn']
+        
+        
+    print(f"agent_bedrock_policy :: {agent_bedrock_policy}")
+    print(f"agent_s3_schema_policy :: {agent_s3_schema_policy}")
+    print(f"kb_db_bedrock_policy :: {kb_db_bedrock_policy}")
+    print(f"kb_aws_bedrock_policy :: {kb_aws_bedrock_policy}")
+    print(f"kb_db_s3_policy :: {kb_db_s3_policy}")
+    print(f"kb_db_aoss_policy :: {kb_db_aoss_policy}")
+    print(f"kb_aws_s3_policy :: {kb_aws_s3_policy}")
+    print(f"kb_aws_aoss_policy :: {kb_aws_aoss_policy}")
+
+    # Delete Lambda function if exists
+    for lambdas in lambda_client.list_functions()['Functions']:
+        if lambda_name in lambdas['FunctionName']:
+            lambda_client.delete_function(
+                FunctionName=lambda_name
+            )
+    
     # Package up the lambda function code
     s = BytesIO()
     z = zipfile.ZipFile(s, 'w')
@@ -249,6 +324,7 @@ def setup_agent_infrastructure():
     # 
     # Once the policies are ready, we will create the Knowledge Base role
 
+    '''
     # Create IAM policies for KB to invoke embedding model
     bedrock_kb_db_allow_fm_model_policy_statement = {
         "Version": "2012-10-17",
@@ -361,11 +437,11 @@ def setup_agent_infrastructure():
         RoleName=kb_db_role_name,
         PolicyArn=kb_db_s3_policy['Policy']['Arn']
     )
-
+    '''
     kb_db_role_arn = kb_db_role["Role"]["Arn"]
     logger.debug(f"kb_db_role_arn :: {kb_db_role_arn} ")
 
-
+    
     # #### Create Vector Data Base
     # 
     # First of all we have to create a vector store. In this section we will use *Amazon OpenSerach serverless.*
@@ -545,7 +621,7 @@ def setup_agent_infrastructure():
 
     index_body["mappings"]["properties"][kb_db_vectorField] = {
         "type": "knn_vector",
-        "dimension": 1536,
+        "dimension": 1024,
         "method": {
             "name": "hnsw",
             "engine": "faiss",
@@ -683,6 +759,7 @@ def setup_agent_infrastructure():
     # 
     # Once the policies are ready, we will create the Knowledge Base role
 
+    '''
 
     # Create IAM policies for KB to invoke embedding model
     bedrock_kb_aws_allow_fm_model_policy_statement = {
@@ -797,7 +874,7 @@ def setup_agent_infrastructure():
         PolicyArn=kb_aws_s3_policy['Policy']['Arn']
     )
 
-
+    '''
     kb_aws_role_arn = kb_aws_role["Role"]["Arn"]
     kb_aws_role_arn
 
@@ -974,7 +1051,7 @@ def setup_agent_infrastructure():
 
     index_body["mappings"]["properties"][kb_aws_vectorField] = {
         "type": "knn_vector",
-        "dimension": 1536,
+        "dimension": 1024,
         "method": {
             "name": "hnsw",
             "engine": "faiss",
@@ -1104,15 +1181,16 @@ def setup_agent_infrastructure():
     )
 
 
+    
     # ### <a name="7">Create Agent</a>
     # (<a href="#0">Go to top</a>)
     # 
     # 
     # We will now create our agent. To do so, we first need to create the agent policies that allow bedrock model invocation  and s3 bucket access. 
 #foundation-model/anthropic.claude-3-sonnet-20240229-v1:0"
-#"anthropic.claude-v2"
+#"anthropic.claude-v2", anthropic.claude-3-sonnet-20240229-v1:0
 # amazon.titan-text-premier-v1:0
-
+    """
     # Create IAM policies for agent
     bedrock_agent_bedrock_allow_policy_statement = {
         "Version": "2012-10-17",
@@ -1122,7 +1200,7 @@ def setup_agent_infrastructure():
                 "Effect": "Allow",
                 "Action": "bedrock:InvokeModel",
                 "Resource": [
-                    f"arn:aws:bedrock:{region}::foundation-model/anthropic.claude-v2"
+                    f"arn:aws:bedrock:{region}::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0"
                 ]
             }
         ]
@@ -1198,9 +1276,8 @@ def setup_agent_infrastructure():
     }
 
     assume_role_policy_document_json = json.dumps(assume_role_policy_document)
-    agent_role = iam_client.create_role(
-        RoleName=agent_role_name,
-        AssumeRolePolicyDocument=assume_role_policy_document_json
+    agent_role = iam_client.get_role(
+        RoleName=agent_role_name
     )
     
     logger.debug(f"agent_name :: {agent_name}  >>>>>  agent_role :: {agent_role}")
@@ -1222,6 +1299,7 @@ def setup_agent_infrastructure():
         RoleName=agent_role_name,
         PolicyArn=agent_kb_schema_policy['Policy']['Arn']
     )
+    """
 
     logger.info(f"agent_name :: {agent_name} \n agent_alias_name :: {agent_alias_name} \n agent_role :: {agent_role} \n bucket_name :: {bucket_name} \n schema_key :: {schema_key} \n knowledge_base_db_id :: {knowledge_base_db_id} \n knowledge_base_aws_id :: {knowledge_base_aws_id} ")
     

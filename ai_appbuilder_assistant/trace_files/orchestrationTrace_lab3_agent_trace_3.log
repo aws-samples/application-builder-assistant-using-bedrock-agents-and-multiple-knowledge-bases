@@ -1,0 +1,9 @@
+{
+  "observation": {
+    "finalResponse": {
+      "text": "To design secure VPCs on AWS, follow these best practices:\n\n**Network Segmentation**\n- Define separate network layers and segment workloads into isolated VPCs for ingress, egress, and inspection flows\n- Use VPC peering, AWS Transit Gateway, or AWS PrivateLink to control traffic between VPCs\n\n**Network Protection**\n- Implement inspection services like AWS Network Firewall, AWS WAF, and Route 53 Resolver DNS Firewall to inspect and control network traffic\n- Use security groups, network ACLs, and route tables as additional layers of defense\n\n**Automation and Governance**\n- Automate network resource deployment using infrastructure as code (IaC) tools like AWS CloudFormation\n- Store IaC templates in version control and use CI/CD pipelines with automated testing\n- Establish a central Network account to define and share network resources across the organization using AWS Resource Access Manager\n\n**Monitoring and Response**\n- Enable VPC flow logs and review firewall logs to monitor for unauthorized access\n- Follow incident response best practices to detect and respond to security events"
+    },
+    "traceId": "584b38e1-0216-4bfd-b7c6-6808c75ab573-1",
+    "type": "FINISH"
+  }
+}
