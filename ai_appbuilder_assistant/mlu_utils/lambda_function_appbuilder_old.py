@@ -110,84 +110,56 @@ def lambda_handler(event, context):
         cursor = load_data()
 
     action = event['actionGroup']
-    #api_path = event['apiPath']
+    api_path = event['apiPath']
     sql_query = None
     query = None
 
+    
     # Extract the action group, api path, and parameters from the prediction
     parameters = event["parameters"]
     inputText = event["inputText"]
-    #httpMethod = event["httpMethod"]
+    httpMethod = event["httpMethod"]
 
     print(f"inputText: {inputText}")
-    #print(f"httpMethod: {httpMethod}")
-    #print(f"api_path >>>>>>>>>>>>>>> : {api_path}")
-    
-    # get the action group used during the invocation of the lambda function
-    actionGroup = event.get('actionGroup', '')
-    
-    # name of the function that should be invoked
-    function = event.get('function', '')
-    
-    # parameters to invoke function with
-    parameters = event.get('parameters', [])
-
-    
-    
+    print(f"httpMethod: {httpMethod}")
+    print(f"api_path >>>>>>>>>>>>>>> : {api_path}")
 
     # Get the query value from the parameters
     if parameters is not None and len(parameters) > 0:
         query = parameters[0]["value"]
         print(f"Query: {query}")
 
-    if function == 'run_query':
-        print(f"Calling main_run_query_empty() >>>>>>> {event}")
-        sql_query = get_named_parameter(event, "Query")
-        
-        #sql_query = event['requestBody']['content']['application/json']['properties'][0]['value']
+    if api_path == '/run-query':
+        print("Calling main_run_query_empty() >>>>>>> ")
+        sql_query = event['requestBody']['content']['application/json']['properties'][0]['value']
         print(f"sql_query >>>>> {sql_query}")
         print(f"cursor >>>>> {cursor}")
         body = main_run_query(sql_query)
-    elif function == "query_well_arch_framework":
+    elif api_path == "/query_well_arch_framework":
         print("Calling query_well_arch_framework() >>>>>>> ")
-        query = get_named_parameter(event, "query")
         # Call the aws_well_arch_tool from the tools module with the query
         body = aws_well_arch_tool(query)
-    elif function == "gen_code":
+    elif api_path == "/gen_code":
         print("Calling gen_code() >>>>>>> ")
-        query = get_named_parameter(event, "query")
         # Call the code_gen_tool from the tools module with the query
         body = code_gen_tool(query)
     else:
-        body = {"{} is not a valid api, try another one.".format(action)}
+        body = {"{}::{} is not a valid api, try another one.".format(action, api_path)}
 
     response_body = {
-        'TEXT': {
+        'application/json': {
             'body': str(body)
         }
     }
 
-
-    action_response = {
-        'actionGroup': actionGroup,
-        'function': function,
-        'functionResponse': {
-            'responseBody': response_body
-        }
-    }
-
-    function_response = {'response': action_response, 'messageVersion': event['messageVersion']}
-    print("Response: {}".format(function_response))
-    '''
     action_response = {
         'actionGroup': event['actionGroup'],
-        #'apiPath': event['apiPath'],
-        #'httpMethod': event['httpMethod'],
+        'apiPath': event['apiPath'],
+        'httpMethod': event['httpMethod'],
         'httpStatusCode': 200,
         'responseBody': response_body
     }
-    '''
 
-    #response = {'response': function_response}
-    return function_response
+    response = {'response': action_response}
+    return response
 

@@ -1,0 +1,3 @@
+{
+  "text": "{'response': {'generatedSQL': \"\\nSELECT strftime('%Y', [orders].OrderDate) AS Year, \\n       SUM([Order Details].UnitPrice * [Order Details].Quantity * (1 - [Order Details].Discount)) AS TotalSales\\nFROM [orders] \\nJOIN [Order Details] ON [orders].OrderID = [Order Details].OrderID\\nGROUP BY Year\\nORDER BY Year;\\n\", 'query_result': [('2012', 18823201.720000044), ('2013', 38633120.010000095), ('2014', 38870148.12999977), ('2015', 41423456.71999985), ('2016', 40568672.35999997), ('2017', 40209904.23350005), ('2018', 38326623.42600006), ('2019', 38516963.859999806), ('2020', 38862436.79000008), ('2021', 41355549.739999905), ('2022', 39742066.18000011), ('2023', 33054489.999999996)]}}"
+}

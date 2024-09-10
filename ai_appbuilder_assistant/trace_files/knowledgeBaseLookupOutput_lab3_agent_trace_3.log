@@ -6,14 +6,14 @@
       },
       "location": {
         "s3Location": {
-          "uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/security-pillar_74_sec_protect_data_transit_authentication.txt"
+          "uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/security-pillar_74_sec_protect_data_transit_authentication.txt"
         },
         "type": "S3"
       },
       "metadata": {
-        "x-amz-bedrock-kb-source-uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/security-pillar_74_sec_protect_data_transit_authentication.txt",
-        "x-amz-bedrock-kb-chunk-id": "1%3A0%3ArNWz3JEBi9OIiCpb9W15",
-        "x-amz-bedrock-kb-data-source-id": "3DHLWQ9PM4"
+        "x-amz-bedrock-kb-source-uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/security-pillar_74_sec_protect_data_transit_authentication.txt",
+        "x-amz-bedrock-kb-chunk-id": "1%3A0%3AH7un3ZEBQBwf1qzi3hcs",
+        "x-amz-bedrock-kb-data-source-id": "LMERGMN0QJ"
       }
     },
     {
@@ -22,14 +22,14 @@
       },
       "location": {
         "s3Location": {
-          "uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/security-pillar_51_sec_network_protection_layered.txt"
+          "uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_316_sec_network_protection_layered.txt"
         },
         "type": "S3"
       },
       "metadata": {
-        "x-amz-bedrock-kb-source-uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/security-pillar_51_sec_network_protection_layered.txt",
-        "x-amz-bedrock-kb-chunk-id": "1%3A0%3ANtW03JEBi9OIiCpbVm7e",
-        "x-amz-bedrock-kb-data-source-id": "3DHLWQ9PM4"
+        "x-amz-bedrock-kb-source-uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_316_sec_network_protection_layered.txt",
+        "x-amz-bedrock-kb-chunk-id": "1%3A0%3ACASo3ZEBai44BzSTVdGe",
+        "x-amz-bedrock-kb-data-source-id": "LMERGMN0QJ"
       }
     },
     {
@@ -38,14 +38,14 @@
       },
       "location": {
         "s3Location": {
-          "uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_316_sec_network_protection_layered.txt"
+          "uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/security-pillar_51_sec_network_protection_layered.txt"
         },
         "type": "S3"
       },
       "metadata": {
-        "x-amz-bedrock-kb-source-uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_316_sec_network_protection_layered.txt",
-        "x-amz-bedrock-kb-chunk-id": "1%3A0%3AJtW03JEBi9OIiCpbTm6k",
-        "x-amz-bedrock-kb-data-source-id": "3DHLWQ9PM4"
+        "x-amz-bedrock-kb-source-uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/security-pillar_51_sec_network_protection_layered.txt",
+        "x-amz-bedrock-kb-chunk-id": "1%3A0%3A6QSo3ZEBai44BzSTRNBe",
+        "x-amz-bedrock-kb-data-source-id": "LMERGMN0QJ"
       }
     },
     {
@@ -54,14 +54,14 @@
       },
       "location": {
         "s3Location": {
-          "uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_318_sec_network_auto_protect.txt"
+          "uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_318_sec_network_auto_protect.txt"
         },
         "type": "S3"
       },
       "metadata": {
-        "x-amz-bedrock-kb-source-uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_318_sec_network_auto_protect.txt",
-        "x-amz-bedrock-kb-chunk-id": "1%3A0%3ApAe03JEBkZycB7P7tiW-",
-        "x-amz-bedrock-kb-data-source-id": "3DHLWQ9PM4"
+        "x-amz-bedrock-kb-source-uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_318_sec_network_auto_protect.txt",
+        "x-amz-bedrock-kb-chunk-id": "1%3A0%3AjgSo3ZEBai44BzSTvNGb",
+        "x-amz-bedrock-kb-data-source-id": "LMERGMN0QJ"
       }
     },
     {
@@ -70,14 +70,14 @@
       },
       "location": {
         "s3Location": {
-          "uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_318_sec_network_auto_protect.txt"
+          "uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_318_sec_network_auto_protect.txt"
         },
         "type": "S3"
       },
       "metadata": {
-        "x-amz-bedrock-kb-source-uri": "s3://l2b9a8d3-agent-kb-122610495479/kbaws_l2b9a8d3/framework_318_sec_network_auto_protect.txt",
-        "x-amz-bedrock-kb-chunk-id": "1%3A0%3Aowe03JEBkZycB7P7tiW-",
-        "x-amz-bedrock-kb-data-source-id": "3DHLWQ9PM4"
+        "x-amz-bedrock-kb-source-uri": "s3://l27cf2d4-agent-kb-122610495479/kbaws_l27cf2d4/framework_318_sec_network_auto_protect.txt",
+        "x-amz-bedrock-kb-chunk-id": "1%3A0%3AjQSo3ZEBai44BzSTvNGb",
+        "x-amz-bedrock-kb-data-source-id": "LMERGMN0QJ"
       }
     }
   ]

@@ -72,8 +72,8 @@ def setup_agent_infrastructure():
     bedrock_agent_bedrock_allow_policy_name = 'SageMakerNotebookPolicy'  #f"{prefix_iam}-bedrock-allow-{suffix}"
     bedrock_agent_s3_allow_policy_name = 'AIAssistantAgentRoleDefaultPolicy' #f"{prefix_iam}-s3-allow-{suffix}"
     bedrock_agent_kb_allow_policy_name = f"{prefix_iam}-kb-allow-{suffix}"
-    lambda_role_name = 'AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant01' #f'{agent_name}-lambda-role-{suffix}'
-    agent_role_name = 'AmazonBedrockExecutionRoleForAgentsAIAssistant01'       #'f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
+    lambda_role_name = 'AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02' #f'{agent_name}-lambda-role-{suffix}'
+    agent_role_name = 'AmazonBedrockExecutionRoleForAgentsAIAssistant02'       #'f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
     lambda_code_path = f"lambda_function_appbuilder.py" # file in repo
     lambda_name = 'LambdaAgentsAIAssistant' #f'{agent_name}-{suffix}'
 

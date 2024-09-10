@@ -1,6 +1,9 @@
 {
-  "rationale": {
-    "text": "The search results provide the relevant tables and columns needed to query sales amounts and dates. The Orders table contains the order_date column, and the Order Details table contains the unit_price, quantity, and discount columns needed to calculate sales amounts. To get total sales by year, I will need to join these tables and group by the year extracted from the order_date column.",
-    "traceId": "a30ea494-6e6a-497f-bee5-b4d50dc3f300-1"
+  "observation": {
+    "finalResponse": {
+      "text": "The SQL query executed successfully and returned the total sales amounts grouped by year. I can now provide the final answer to the original question.\n\n\n\nThe total sales amounts by year are:\n\n| Year | Total Sales |\n|------|-------------|\n| 2023 | 33054489.99 |\n| 2022 | 39742066.18 |  \n| 2021 | 41355549.74 |\n| 2020 | 38862436.79 |\n| 2019 | 38516963.86 |\n| 2018 | 38326623.43 |\n| 2017 | 40209904.23 |\n| 2016 | 40568672.36 |\n| 2015 | 41423456.72 |\n| 2014 | 38870148.13 |\n| 2013 | 38633120.01 |\n| 2012 | 18823201.72 |\n\n\n\nThe query joins the orders and Order Details tables to calculate the total sales amount for each order by multiplying the unit price, quantity, and applying the discount. It then groups these calculated amounts by the year extracted from the order date and sums them to get the total sales per year. The results are ordered by year for readability."
+    },
+    "traceId": "477044c7-6b5d-447e-a221-bf8033a21686-2",
+    "type": "FINISH"
   }
 }
