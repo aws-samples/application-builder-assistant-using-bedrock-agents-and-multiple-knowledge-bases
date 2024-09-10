@@ -19,98 +19,94 @@ Resources:
         Statement:
           - Effect: Allow
             Action:
-              - 'bedrock:ListFoundationModels'
-              - 'bedrock:InvokeModel'
-              - 'bedrock:ListGuardrails'
-              - 'bedrock:CreateGuardrail'
-              - 'bedrock:CreateGuardrailVersion'
-              - 'bedrock:GetGuardrail'
-              - 'bedrock:ApplyGuardrail'
-              - 'bedrock:UpdateGuardrail'
-              - 'bedrock:DeleteGuardrail'
-              - 'bedrock:GetFoundationModel'
-              - 'bedrock:TagResource'
-              - 'bedrock:UntagResource'
-              - 'bedrock:ListTagsForResource'
-              - 'bedrock:CreateAgent'
-              - 'bedrock:UpdateAgent'
-              - 'bedrock:GetAgent'
-              - 'bedrock:ListAgents'
-              - 'bedrock:DeleteAgent'
-              - 'bedrock:CreateAgentActionGroup'
-              - 'bedrock:UpdateAgentActionGroup'
-              - 'bedrock:GetAgentActionGroup'
-              - 'bedrock:ListAgentActionGroups'
-              - 'bedrock:DeleteAgentActionGroup'
-              - 'bedrock:GetAgentVersion'
-              - 'bedrock:ListAgentVersions'
-              - 'bedrock:DeleteAgentVersion'
-              - 'bedrock:CreateAgentAlias'
-              - 'bedrock:UpdateAgentAlias'
-              - 'bedrock:GetAgentAlias'
-              - 'bedrock:ListAgentAliases'
-              - 'bedrock:DeleteAgentAlias'
-              - 'bedrock:Retrieve'
-              - 'bedrock:AssociateAgentKnowledgeBase'
               - 'aoss:APIAccessAll'
+              - 'aoss:BatchGetCollection'
+              - 'aoss:CreateAccessPolicy'
               - 'aoss:CreateCollection'
               - 'aoss:CreateDataSource'
-              - 'aoss:DeleteCollection'
-              - 'aoss:UpdateCollection'
-              - 'aoss:CreateAccessPolicy'
-              - 'aoss:CreateSecurityPolicy'
-              - 'aoss:CreateCollection'
-              - 'aoss:DeleteCollection'
-              - 'aoss:UpdateCollection'
-              - 'aoss:BatchGetCollection'
-              - 'aoss:ListCollections'
-              - 'aoss:DescribeIndex'
               - 'aoss:CreateIndex'
+              - 'aoss:CreateSecurityPolicy'
+              - 'aoss:DeleteCollection'
+              - 'aoss:DescribeIndex'
+              - 'aoss:ListCollections'
               - 'aoss:ReadDocument'
+              - 'aoss:UpdateCollection'
               - 'aoss:WriteDocument'
+              - 'bedrock:ApplyGuardrail'
+              - 'bedrock:AssociateAgentKnowledgeBase'
+              - 'bedrock:CreateAgent'
+              - 'bedrock:CreateAgentActionGroup'
+              - 'bedrock:CreateAgentAlias'
               - 'bedrock:CreateDataSource'
-              - 'bedrock:DeleteDataSource'
+              - 'bedrock:CreateGuardrail'
+              - 'bedrock:CreateGuardrailVersion'
               - 'bedrock:CreateKnowledgeBase'
+              - 'bedrock:DeleteAgent'
+              - 'bedrock:DeleteAgentActionGroup'
+              - 'bedrock:DeleteAgentAlias'
+              - 'bedrock:DeleteAgentVersion'
+              - 'bedrock:DeleteDataSource'
+              - 'bedrock:DeleteGuardrail'
               - 'bedrock:DeleteKnowledgeBase'
               - 'bedrock:DisassociateAgentKnowledgeBase'
+              - 'bedrock:GetAgent'
+              - 'bedrock:GetAgentActionGroup'
+              - 'bedrock:GetAgentAlias'
+              - 'bedrock:GetAgentVersion'
+              - 'bedrock:GetFoundationModel'
+              - 'bedrock:GetGuardrail'
               - 'bedrock:GetKnowledgeBase'
-              - 'bedrock:ListKnowledgeBases'
-              - 'bedrock:PrepareAgent'
               - 'bedrock:InvokeAgent'
-              - 'bedrock:StartIngestionJob'
+              - 'bedrock:InvokeModel'
+              - 'bedrock:ListAgentActionGroups'
+              - 'bedrock:ListAgentAliases'
+              - 'bedrock:ListAgentVersions'
+              - 'bedrock:ListAgents'
+              - 'bedrock:ListFoundationModels'
+              - 'bedrock:ListGuardrails'
+              - 'bedrock:ListKnowledgeBases'
+              - 'bedrock:ListTagsForResource'
+              - 'bedrock:PrepareAgent'
               - 'bedrock:Retrieve'
-              - 'iam:GetRole'
+              - 'bedrock:StartIngestionJob'
+              - 'bedrock:TagResource'
+              - 'bedrock:UntagResource'
+              - 'bedrock:UpdateAgent'
+              - 'bedrock:UpdateAgentActionGroup'
+              - 'bedrock:UpdateAgentAlias'
+              - 'bedrock:UpdateGuardrail'
               - 'iam:GetPolicy'
+              - 'iam:GetRole'
               - 'iam:ListPolicies'
-              - 's3:ListAllMyBuckets'
               - 'lambda:ListFunctions'
+              - 's3:ListAllMyBuckets'
             Resource: "*"
           - Effect: Allow
             Action:
               - 's3:CreateBucket'
               - 's3:DeleteBucket'
+              - 's3:DeleteObject'
+              - 's3:GetObject'
               - 's3:ListBucket'
               - 's3:PutObject'
-              - 's3:GetObject'
-              - 's3:DeleteObject'
             Resource: "arn:aws:s3:::*-agent-kb*"
           - Effect: Allow
             Action:
-              - 'lambda:CreateFunction'
               - 'lambda:AddPermission'
+              - 'lambda:CreateFunction'
               - 'lambda:DeleteFunction'
             Resource: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*LambdaAgents*"
           - Effect: Allow
             Action:
               - 'iam:PassRole'
             Resource: 
-              - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockLambdaExecutionRoleForAgents*"
               - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockExecutionRoleForAgents*"
+              - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockLambdaExecutionRoleForAgents*"
 
   AmazonBedrockExecutionRoleForAgentsAIAssistant02:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub AmazonBedrockExecutionRoleForAgentsAIAssistant02
+      RoleName: AmazonBedrockExecutionRoleForAgentsAIAssistant02
       AssumeRolePolicyDocument:
         Statement:
         - Effect: Allow
@@ -127,7 +123,7 @@ Resources:
   AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+      RoleName: AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
       AssumeRolePolicyDocument:
         Statement:
           - Action: 'sts:AssumeRole'
@@ -137,8 +133,8 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
-        - arn:aws:iam::aws:policy/service-role/AmazonS3ObjectLambdaExecutionRolePolicy
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AmazonS3ObjectLambdaExecutionRolePolicy
         - !Ref SageMakerNotebookPolicy
 
   AIAssistantAgentRoleDefaultPolicy:
@@ -148,10 +144,10 @@ Resources:
       PolicyDocument:
         Statement:
           - Action:
-              - lambda:invokeFunction
+              - bedrock:ApplyGuardrail
               - bedrock:InvokeModel
               - bedrock:Retrieve
-              - bedrock:ApplyGuardrail
+              - lambda:invokeFunction
               - s3:GetObject
             Effect: Allow
             Resource: '*'
@@ -170,9 +166,9 @@ Resources:
               - bedrock:InvokeModel
             Effect: Allow
             Resource: 
+              - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/amazon.titan-embed-text-v1'
               - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/anthropic.claude-3-sonnet-20240229-v1:0'
               - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/anthropic.claude-v2'
-              - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/amazon.titan-embed-text-v1'
         Version: 2012-10-17
       Roles:
         - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant02
@@ -240,7 +236,7 @@ Resources:
       OnStart:
         - Content:
             Fn::Base64:
-              !Sub |
+             |
               #!/bin/bash
 
               set -ex
