@@ -11,6 +11,33 @@ logging.basicConfig(format='[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d}
 logger = logging.getLogger(__name__)
 
 
+def check_for_kb_files():
+    northwind_file_name = f"kb_appbuilder/northwind_db/northwind.db"
+    aws_dir = "kb_appbuilder/aws_best_practices_2"
+    aws_file_name = f"{aws_dir}/cost-optimization-pillar_894_welcome.txt"
+    
+    northwind_exists = False
+    aws_exists = False
+    
+    northwind_filepath = Path(northwind_file_name)
+    if northwind_filepath.is_file():
+        northwind_exists = True
+    
+    aws_filepath = Path(aws_file_name)
+    if aws_filepath.is_file():
+        aws_exists = True
+    else:
+        _, _, files = next(os.walk(aws_dir))
+        file_count = len(files)
+        if file_count > 5:
+            aws_exists = True
+        
+    if northwind_exists and aws_exists:
+        return True
+    else:
+        return False
+        
+
 def clean_up_trace_files(trace_file_path):
     # cleanup trace files to avoid issues
     if os.path.isdir(trace_file_path):
