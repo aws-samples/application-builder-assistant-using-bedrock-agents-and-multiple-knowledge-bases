@@ -304,13 +304,6 @@ def setup_agent_infrastructure():
     z.close()
     zip_content = s.getvalue()
 
-    # Delete Lambda function if exists
-    for lambdas in lambda_client.list_functions()['Functions']:
-        if lambda_name in lambdas['FunctionName']:
-            lambda_client.delete_function(
-                FunctionName=lambda_name
-            )
-
     # Create Lambda Function
     lambda_function = lambda_client.create_function(
         FunctionName=lambda_name,
