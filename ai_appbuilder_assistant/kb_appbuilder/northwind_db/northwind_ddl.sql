@@ -179,7 +179,7 @@ CREATE TABLE products (
     supplier_id smallint,
     category_id smallint,
     quantity_per_unit character varying(20),
-    unit_price real,
+    unitprice real,
     units_in_stock smallint,
     units_on_order smallint,
     reorder_level smallint,
@@ -215,7 +215,7 @@ CREATE TABLE shippers (
 --
 
 CREATE TABLE orders (
-    order_id smallint NOT NULL PRIMARY KEY,
+    orderid smallint NOT NULL PRIMARY KEY,
     customer_id bpchar,
     employee_id smallint,
     orderdate date,
@@ -265,14 +265,14 @@ CREATE TABLE employee_territories (
 --
 
 CREATE TABLE [Order Details] (
-    order_id smallint NOT NULL,
+    orderid smallint NOT NULL,
     product_id smallint NOT NULL,
-    unit_price real NOT NULL,
+    unitprice real NOT NULL,
     quantity smallint NOT NULL,
     discount real NOT NULL,
-    PRIMARY KEY (order_id, product_id),
+    PRIMARY KEY (orderid, product_id),
     FOREIGN KEY (product_id) REFERENCES products,
-    FOREIGN KEY (order_id) REFERENCES orders
+    FOREIGN KEY (orderid) REFERENCES orders
 );
 
 
