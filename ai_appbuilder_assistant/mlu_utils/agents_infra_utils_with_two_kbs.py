@@ -155,10 +155,6 @@ def setup_agent_infrastructure():
             Bucket=bucket_name,
             CreateBucketConfiguration={'LocationConstraint': region}
         )
-    s3bucket = s3_client.create_bucket(
-        Bucket=bucket_name,
-        CreateBucketConfiguration={'LocationConstraint': region}
-    )
 
 
     # Upload Open API schema to this s3 bucket
