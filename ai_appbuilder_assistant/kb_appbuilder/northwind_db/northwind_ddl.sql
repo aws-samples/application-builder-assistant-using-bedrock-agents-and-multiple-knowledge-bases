@@ -218,7 +218,7 @@ CREATE TABLE orders (
     order_id smallint NOT NULL PRIMARY KEY,
     customer_id bpchar,
     employee_id smallint,
-    order_date date,
+    orderdate date,
     required_date date,
     shipped_date date,
     ship_via smallint,
