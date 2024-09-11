@@ -221,6 +221,11 @@ Resources:
       ManagedPolicyArns:
         - !Ref SageMakerNotebookPolicy
 
+  AOSSLinkedRole:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      AWSServiceName: observability.aoss.amazonaws.com
+
   SageMakerNotebookInstance:
     Type: AWS::SageMaker::NotebookInstance
     Properties:
