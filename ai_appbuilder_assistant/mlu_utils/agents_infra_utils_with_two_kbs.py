@@ -144,6 +144,17 @@ def setup_agent_infrastructure():
 
 
     # Create S3 bucket for Open API schema
+    logger.info(f"region :: {region} ")
+    s3bucket = None
+    if region.lower() == "us-east-1":
+        s3bucket = s3_client.create_bucket(
+            Bucket=bucket_name
+        )
+    else:
+        s3bucket = s3_client.create_bucket(
+            Bucket=bucket_name,
+            CreateBucketConfiguration={'LocationConstraint': region}
+        )
     s3bucket = s3_client.create_bucket(
         Bucket=bucket_name,
         CreateBucketConfiguration={'LocationConstraint': region}
