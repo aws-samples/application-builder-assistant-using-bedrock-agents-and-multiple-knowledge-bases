@@ -12,5 +12,27 @@ __Project : Application Builder Assistant using Bedrock Agents and multiple know
 
 ---
 
+
+__Setup Instructions__
+
+Download the knowledge base files as per `readMe.txt` instructions in both of these locations
+ 1. `kb_appbuilder/aws_best_practices_2/readMe.txt`
+ 2. `kb_appbuilder/northwind_db/readMe.txt`
+
+---
+__Troubleshooting: CFN template__
+
+Please add the following independent role in `SageMaker_Bedrock_Agents.yaml` if you get the following error:
+
+`SageMaker is not authorized to perform: iam:CreateServiceLinkedRole on resource: arn:aws:iam::<account-id>:role/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless because no identity-based policy allows the iam:CreateServiceLinkedRole action`
+
+"""
+AOSSLinkedRole:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      AWSServiceName: observability.aoss.amazonaws.com
+"""
+---
+
 ## License
 The license for this repository depends on the section.  Data set for the course is being provided to you by permission of Amazon and is subject to the terms of the [Amazon License and Access](https://www.amazon.com/gp/help/customer/display.html?nodeId=201909000). You are expressly prohibited from copying, modifying, selling, exporting or using this data set in any way other than for the purpose of completing this course. The lecture slides are released under the CC-BY-SA-4.0 License.  This project is licensed under the Apache-2.0 License. See each section's LICENSE file for details.

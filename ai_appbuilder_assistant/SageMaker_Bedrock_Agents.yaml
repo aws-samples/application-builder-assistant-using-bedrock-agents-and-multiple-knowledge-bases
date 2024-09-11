@@ -103,10 +103,10 @@ Resources:
               - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockExecutionRoleForAgents*"
               - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockLambdaExecutionRoleForAgents*"
 
-  AmazonBedrockExecutionRoleForAgentsAIAssistant02:
+  AmazonBedrockExecutionRoleForAgentsAIAssistant03:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: AmazonBedrockExecutionRoleForAgentsAIAssistant02
+      RoleName: AmazonBedrockExecutionRoleForAgentsAIAssistant03
       AssumeRolePolicyDocument:
         Statement:
         - Effect: Allow
@@ -120,10 +120,10 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
         - !Ref SageMakerNotebookPolicy
 
-  AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02:
+  AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+      RoleName: AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03
       AssumeRolePolicyDocument:
         Statement:
           - Action: 'sts:AssumeRole'
@@ -153,8 +153,8 @@ Resources:
             Resource: '*'
         Version: 2012-10-17
       Roles:
-        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant02
-        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant03
+        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03
 
   AmazonBedrockAgentBedrockFoundationModelPolicy:
     Type: 'AWS::IAM::Policy'
@@ -171,8 +171,8 @@ Resources:
               - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/anthropic.claude-v2'
         Version: 2012-10-17
       Roles:
-        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant02
-        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant03
+        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03
 
   AmazonBedrockAgentBedrockApplyGuardrailPolicy:
     Type: 'AWS::IAM::Policy'
@@ -186,8 +186,8 @@ Resources:
             Resource: !Sub 'arn:aws:bedrock::${AWS::AccountId}:guardrail/*'
         Version: 2012-10-17
       Roles:
-        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant02
-        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant03
+        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03
 
   AmazonBedrockAgentAOSSPolicy:
     Type: 'AWS::IAM::Policy'
@@ -202,8 +202,8 @@ Resources:
               - !Sub 'arn:aws:aoss:${AWS::Region}:${AWS::AccountId}:collection/*'
         Version: 2012-10-17
       Roles:
-        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant02
-        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02
+        - !Ref AmazonBedrockExecutionRoleForAgentsAIAssistant03
+        - !Ref AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03
 
   SageMakerNotebookRole:
     Type: AWS::IAM::Role
@@ -220,11 +220,6 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - !Ref SageMakerNotebookPolicy
-
-  AOSSLinkedRole:
-    Type: AWS::IAM::ServiceLinkedRole
-    Properties:
-      AWSServiceName: observability.aoss.amazonaws.com
 
   SageMakerNotebookInstance:
     Type: AWS::SageMaker::NotebookInstance
