@@ -72,8 +72,8 @@ def setup_agent_infrastructure():
     bedrock_agent_bedrock_allow_policy_name = 'SageMakerNotebookPolicy'  #f"{prefix_iam}-bedrock-allow-{suffix}"
     bedrock_agent_s3_allow_policy_name = 'AIAssistantAgentRoleDefaultPolicy' #f"{prefix_iam}-s3-allow-{suffix}"
     bedrock_agent_kb_allow_policy_name = f"{prefix_iam}-kb-allow-{suffix}"
-    lambda_role_name = 'AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant02' #f'{agent_name}-lambda-role-{suffix}'
-    agent_role_name = 'AmazonBedrockExecutionRoleForAgentsAIAssistant02'       #'f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
+    lambda_role_name = 'AmazonBedrockLambdaExecutionRoleForAgentsAIAssistant03' #f'{agent_name}-lambda-role-{suffix}'
+    agent_role_name = 'AmazonBedrockExecutionRoleForAgentsAIAssistant03'       #'f'AmazonBedrockExecutionRoleForAgents_{prefix_iam}'
     lambda_code_path = f"lambda_function_appbuilder.py" # file in repo
     lambda_name = 'LambdaAgentsAIAssistant' #f'{agent_name}-{suffix}'
 
@@ -104,11 +104,11 @@ def setup_agent_infrastructure():
     kb_aws_data_source_name = f'{prefix_infra}-{kb_aws_tag}-docs-{suffix}'
     kb_aws_files_path = f'kb_appbuilder/aws_best_practices_2' # file path keep as-is
     kb_aws_key = f'{kb_aws_tag}_{prefix_infra}'
-    kb_aws_role_name = agent_role_name #'AmazonBedrockExecutionRoleForKnowledgeBase02'
+    kb_aws_role_name = agent_role_name #'AmazonBedrockExecutionRoleForKnowledgeBase03'
     #f'AmazonBedrockExecutionRoleForKnowledgeBase_{prefix_infra}_{kb_aws_tag}_icakb'
-    kb_aws_bedrock_allow_policy_name = "icaKbdbAgentsBedrockAllow02" #f"ica-{kb_aws_tag}-{prefix_infra}-bedrock-allow-{suffix}"
-    kb_aws_aoss_allow_policy_name = "icaKbdbAgentsBedrockAossAllow02" #f"ica-{kb_aws_tag}-{prefix_infra}-aoss-allow-{suffix}"
-    kb_aws_s3_allow_policy_name = "icaKbdbAgentsBedrocks3Allow02" #f"ica-{kb_aws_tag}-{prefix_infra}-s3-allow-{suffix}"
+    kb_aws_bedrock_allow_policy_name = "icaKbdbAgentsBedrockAllow03" #f"ica-{kb_aws_tag}-{prefix_infra}-bedrock-allow-{suffix}"
+    kb_aws_aoss_allow_policy_name = "icaKbdbAgentsBedrockAossAllow03" #f"ica-{kb_aws_tag}-{prefix_infra}-aoss-allow-{suffix}"
+    kb_aws_s3_allow_policy_name = "icaKbdbAgentsBedrocks3Allow03" #f"ica-{kb_aws_tag}-{prefix_infra}-s3-allow-{suffix}"
     
     
     kb_aws_collection_name = 'kbaws-collection-agents' #f'{prefix_iam}-{kb_aws_tag}-{suffix}' 
