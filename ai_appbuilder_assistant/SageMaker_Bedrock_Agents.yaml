@@ -182,7 +182,7 @@ Resources:
               - bedrock:InvokeModel
             Effect: Allow
             Resource: 
-              - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/amazon.titan-embed-text-v1'
+              - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/amazon.titan-embed-text-v2:0'
               - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/anthropic.claude-3-sonnet-20240229-v1:0'
               - !Sub 'arn:aws:bedrock::${AWS::AccountId}:foundation-model/anthropic.claude-v2'
         Version: 2012-10-17
