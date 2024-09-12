@@ -6,6 +6,7 @@ import logging
 import json
 from IPython.display import JSON
 import os, shutil
+from pathlib import Path
 
 logging.basicConfig(format='[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
