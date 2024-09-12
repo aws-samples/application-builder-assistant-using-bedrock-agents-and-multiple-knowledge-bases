@@ -102,6 +102,20 @@ Resources:
             Resource: 
               - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockExecutionRoleForAgents*"
               - !Sub "arn:aws:iam::${AWS::AccountId}:role/AmazonBedrockLambdaExecutionRoleForAgents*"
+          - Effect: Allow
+            Action:
+              - 'iam:CreateServiceLinkedRole'
+            Resource: 
+              - "arn:aws:iam::*:role/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless*"
+            Condition:
+              StringLike:
+                'iam:AWSServiceName': 'observability.aoss.amazonaws.com'
+          - Effect: Allow
+            Action:
+              - 'iam:AttachRolePolicy'
+              - 'iam:PutRolePolicy'
+            Resource: 
+              - "arn:aws:iam::*:role/aws-service-role/observability.aoss.amazonaws.com/AWSServiceRoleForAmazonOpenSearchServerless*"
 
   AmazonBedrockExecutionRoleForAgentsAIAssistant03:
     Type: AWS::IAM::Role

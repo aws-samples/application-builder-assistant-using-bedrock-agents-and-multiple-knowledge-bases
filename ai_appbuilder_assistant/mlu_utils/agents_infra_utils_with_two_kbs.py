@@ -1411,12 +1411,8 @@ def cleanup_infrastructure(agent_action_group_response, lambda_name, lambda_func
     )
 
 
-    
-
-    #agent_s3_schema_policy
-
-
     # Delete IAM Roles and policies
+    
 
     for policy in [
         agent_bedrock_policy, 
@@ -1429,38 +1425,42 @@ def cleanup_infrastructure(agent_action_group_response, lambda_name, lambda_func
         kb_db_s3_policy,
         kb_aws_s3_policy
     ]:
-        response = iam_client.list_entities_for_policy(
-            PolicyArn=policy['Policy']['Arn'],
-            EntityFilter='Role'
-        )
+        if policy is not None:
 
-        for role in response['PolicyRoles']:
-            iam_client.detach_role_policy(
-                RoleName=role['RoleName'], 
-                PolicyArn=policy['Policy']['Arn']
+            response = iam_client.list_entities_for_policy(
+                PolicyArn=policy['Policy']['Arn'],
+                EntityFilter='Role'
             )
 
-        iam_client.delete_policy(
-            PolicyArn=policy['Policy']['Arn']
-        )
+            for role in response['PolicyRoles']:
+                iam_client.detach_role_policy(
+                    RoleName=role['RoleName'], 
+                    PolicyArn=policy['Policy']['Arn']
+                )
+
+            iam_client.delete_policy(
+                PolicyArn=policy['Policy']['Arn']
+            )
 
 
     iam_client.detach_role_policy(RoleName=lambda_role_name, PolicyArn='arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole')
     iam_client.detach_role_policy(RoleName=lambda_role_name, PolicyArn='arn:aws:iam::aws:policy/AmazonS3FullAccess')
 
+    
     for role_name in [
         agent_role_name, 
         lambda_role_name, 
         kb_db_role_name,
         kb_aws_role_name
     ]:
-        try: 
-            iam_client.delete_role(
-                RoleName=role_name
-            )
-        except Exception as e:
-            print(e)
-            print("couldn't delete role", role_name)
+        if role_name is not None:
+            try: 
+                iam_client.delete_role(
+                    RoleName=role_name
+                )
+            except Exception as e:
+                print(e)
+                print("couldn't delete role", role_name)
 
     try:
 
