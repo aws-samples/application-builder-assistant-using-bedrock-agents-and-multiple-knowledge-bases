@@ -27,6 +27,8 @@ Resources:
               - 'aoss:CreateIndex'
               - 'aoss:CreateSecurityPolicy'
               - 'aoss:DeleteCollection'
+              - 'aoss:DeleteAccessPolicy'
+              - 'aoss:DeleteSecurityPolicy'
               - 'aoss:DescribeIndex'
               - 'aoss:ListCollections'
               - 'aoss:ReadDocument'

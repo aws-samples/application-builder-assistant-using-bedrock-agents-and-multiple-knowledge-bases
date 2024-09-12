@@ -1410,7 +1410,7 @@ def cleanup_infrastructure(agent_action_group_response, lambda_name, lambda_func
         FunctionName=lambda_name
     )
 
-
+    '''
     # Delete IAM Roles and policies
     
 
@@ -1462,6 +1462,8 @@ def cleanup_infrastructure(agent_action_group_response, lambda_name, lambda_func
                 print(e)
                 print("couldn't delete role", role_name)
 
+    '''
+    
     try:
 
         open_search_serverless_client.delete_collection(
